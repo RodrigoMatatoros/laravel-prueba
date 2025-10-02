@@ -7,5 +7,5 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::post('/registrar',[TaskController::class,'registrar']);
+Route::post('/registrar', [TaskController::class,'registrar']);
 

@@ -10,10 +10,10 @@
         
         <form action="/registrar" method="POST">
             @csrf
-            <input type="text" placeholder="nombre">
-            <input type="text" placeholder="email">
-            <input type="text" placeholder="password">
-            <input type="submit">
+            <input name="name" type="text" placeholder="nombre">
+            <input name="email" type="text" placeholder="email">
+            <input name="password" type="text" placeholder="password">
+            <button>Registrarse</button>
         </form>
         
 
