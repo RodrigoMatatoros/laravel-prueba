@@ -7,5 +7,12 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/create', function(){
+    return view('create');
+});
+
 Route::post('/registrar', [TaskController::class,'registrar']);
 
+Route::post('/logout', [TaskController::class,'logout']);
+
+Route::post('/login', [TaskController::class,'login']);
