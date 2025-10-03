@@ -8,7 +8,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/create', [TaskController::class, 'create'])->middleware('auth');
+Route::get('/principal', [TaskController::class, 'principal'])->middleware('auth');
 
 Route::post('/registrar', [TaskController::class,'registrar']);
 

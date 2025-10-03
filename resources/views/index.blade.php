@@ -18,7 +18,7 @@
             @csrf
             <input name="name" type="text" placeholder="nombre">
             <input name="email" type="text" placeholder="email">
-            <input name="password" type="text" placeholder="password">
+            <input name="password" type="password" placeholder="password">
             <button>Registrarse</button>
         </form>
         
@@ -31,7 +31,7 @@
         <form action="/login" method="POST">
             @csrf
             <input name="loginname" type="text" placeholder="nombre"> 
-            <input name="loginpassword" type="text" placeholder="password">
+            <input name="loginpassword" type="password" placeholder="password">
             <button>Login</button>
         </form>
         
