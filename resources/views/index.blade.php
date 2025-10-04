@@ -14,12 +14,24 @@
     @else
         <div style="border: 3px solid black;">
         <h1>Registrarse</h1>
+
+        {{-- MOSTRAR ERRORES --}}
+    @if($errors->any())
+        <div style="color: red; background: #fee; padding: 10px; margin: 10px 0;">
+            <h4>Errores de validación:</h4>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
         <form action="/registrar" method="POST">
             @csrf
             <input name="name" type="text" placeholder="nombre">
             <input name="email" type="text" placeholder="email">
             <input name="password" type="password" placeholder="password">
-            <button>Registrarse</button>
+            <input type="submit"></input>
         </form>
         
 

@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -26,16 +27,23 @@ class TaskController extends Controller
     ]);
 }
     public function registrar(Request $request){
+
+
+        Log::info('=== INICIANDO REGISTRO ===');
+        Log::info('Datos del formulario:', $request->all());
         $valores = $request->validate([
             'name'=>['required', Rule::unique('users','name')],
             'email'=>['required', Rule::unique('users', 'email')],
             'password'=>['required', 'min:8', 'max:200']
         ]);
+
+        Log::info('Validación pasada');
         $user = User::create([
                 'name' => $valores['name'],
                 'email' => $valores['email'],
                 'password' => bcrypt($valores['password']),
             ]);
+            Log::info('Usuario creado con ID: ' . $user->id);
         auth()->login($user);
 
         return redirect('/principal');
@@ -43,7 +51,10 @@ class TaskController extends Controller
 
      public function principal()
     {
-        return view('principal');
+        if (!auth()->check()) {
+        return redirect('/'); // o donde tengas el formulario de registro
+    }
+        return view('/principal');
     }
 
     
@@ -52,7 +63,7 @@ class TaskController extends Controller
         $categories = Category::all();
         return view('tasks.create', compact('categories'));
     }
-
+/*
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -72,7 +83,7 @@ class TaskController extends Controller
         }
 
         return redirect()->route('/principal')->with('success', 'Tarea creada correctamente');
-    }
+    }*/
     public function logout(){
         auth()->logout();
         return redirect('/');

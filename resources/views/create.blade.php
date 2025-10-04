@@ -8,7 +8,7 @@
     @auth
     <div style="border: 3px solid black;">
         <h1>Nueva tarea</h1>
-        <form action="{{ route('tasks.store') }}" method="POST">
+        <form action="/store" method="POST">
         @csrf
         <label for="title">Título</label>
         <input type="text" id="title" name="title" required>
