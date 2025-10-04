@@ -12,6 +12,10 @@
         <p>Para crear una nueva actividad</p>
         <button>Crear</button>
     </form>
+    <p>Fitrar por tareas</p>
+    <form action="" method="POST">
+    </form>
+
     <form action="/logout" method="POST">
         @csrf
         <button>Log out</button>

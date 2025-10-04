@@ -12,8 +12,12 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/create', [TaskController::class, 'create'])->middleware('auth');
+Route::post('/create', [TaskController::class, 'create'])->middleware('auth');
 
 Route::get('/principal', [TaskController::class, 'principal'])->middleware('auth');
+Route::post('/principal', [TaskController::class, 'principal'])->middleware('auth');
+
+Route::post('/store', [TaskController::class, 'store'])->middleware('auth');
 
 Route::post('/registrar', [TaskController::class,'registrar']);
 

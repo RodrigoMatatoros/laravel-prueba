@@ -25,6 +25,6 @@ class Task extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'taskcategory', 'task_id', 'category_id');
+        return $this->belongsToMany(Category::class, 'taskcategories', 'task_id', 'category_id');
     }
 }

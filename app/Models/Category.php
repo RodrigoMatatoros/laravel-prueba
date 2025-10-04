@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-     use HasFactory;
+    use HasFactory;
     protected $table = 'categories';
     protected $primaryKey ='id';
     public $incrementing = true;
@@ -15,9 +15,8 @@ class Category extends Model
         'name',
         'color',
     ];
-    public function tasks()
-    {
-        return $this->belongsToMany(Task::class, 'taskcategory', 'category_id', 'task_id');
+    public function tasks(){
+        return $this->belongsToMany(Task::class, 'taskcategories', 'category_id', 'task_id');
        
     }
 }
