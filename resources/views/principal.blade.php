@@ -13,7 +13,7 @@
         <button>Crear</button>
     </form>
     <p>Fitrar por tareas</p>
-    <form action="" method="POST">
+    <form action="" method="GET">
     </form>
 
     <form action="/logout" method="POST">

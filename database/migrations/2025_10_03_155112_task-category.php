@@ -15,8 +15,6 @@ return new class extends Migration
         Schema::enableForeignKeyConstraints();
         Schema::create('taskcategories', function (Blueprint $table) {
             $table->id();
-            /*$table->unsignedBigInteger('task_id');
-            $table->unsignedBigInteger('category_id');*/
             $table->timestamps();
 
             $table->foreignId('task_id')->constrained('tasks')->onDelete('cascade');
