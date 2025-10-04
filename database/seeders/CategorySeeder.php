@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-use App\Model\Category;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -27,10 +27,5 @@ class CategorySeeder extends Seeder
         $category3->name="Programar";
         $category3->color="rojo";
         $category3-> save();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
     }
 }

@@ -3,7 +3,6 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use App\Http\Middleware\EnsureTokenisValid;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,10 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Si necesitas tu middleware personalizado, usa otro nombre
         $middleware->alias([
-            'auth'=>App\Http\Middleware\EnsureTokenisValid::class
+            'custom.auth' => App\Http\Middleware\EnsureTokenisValid::class,
         ]);
-            
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -28,14 +28,17 @@ class TaskController extends Controller
     public function registrar(Request $request){
         $valores = $request->validate([
             'name'=>['required', Rule::unique('users','name')],
-            'email'=>['required', 'email'],
+            'email'=>['required', Rule::unique('users', 'email')],
             'password'=>['required', 'min:8', 'max:200']
         ]);
-        $valores['password']= bcrypt($valores['password']);
-        $user = User::create($valores);
+        $user = User::create([
+                'name' => $valores['name'],
+                'email' => $valores['email'],
+                'password' => bcrypt($valores['password']),
+            ]);
         auth()->login($user);
 
-        return redirect('/create');
+        return redirect('/principal');
     }
 
      public function principal()
