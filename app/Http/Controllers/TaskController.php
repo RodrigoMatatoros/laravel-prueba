@@ -6,17 +6,16 @@ use App\Models\User;
 use App\Models\Task;
 use App\Models\Category;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\StoreRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
-    public function login(Request $request){
-        $valores = $request->validate([
-            'loginname' => 'required',
-            'loginpassword' => 'required'
-        ]);
+    public function login(LoginRequest $request){
+        $valores = $request->validated();
 
         if(auth()->attempt(['name' => $valores['loginname'], 'password' => $valores['loginpassword']])){
             $request->session()->regenerate();
@@ -54,16 +53,9 @@ class TaskController extends Controller
         return view('create', compact('categories'));
     }
 
-    public function store(Request $request) {
+    public function store(StoreRequest $request) {
 
-        $valores = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'due_date' => 'required|date',
-            'status' => 'required|in:pending,in_progress,completed',
-            'categories' => 'sometimes|array',
-            'categories.*' => 'exists:categories,id'
-        ]);
+        $valores = $request->validated();
         $task = Task::create([
             'name' => $valores['name'],
             'description' => $valores['description'],
