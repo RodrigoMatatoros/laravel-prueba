@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Task;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
@@ -26,14 +27,8 @@ class TaskController extends Controller
             'loginname' => 'El usuario o la contraseña no es la correcta'
         ]);
     }
-    public function registrar(Request $request){
-
-
-        $valores = $request->validate([
-            'name'=>['required', Rule::unique('users','name')],
-            'email'=>['required', Rule::unique('users', 'email')],
-            'password'=>['required', 'min:8', 'max:200']
-        ]);
+    public function registrar(RegisterRequest $request){
+        $valores = $request->validated();
 
         $user = User::create([
                 'name' => $valores['name'],
