@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\StoreRequest;
+use App\Http\Requests\UpdateRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -56,7 +57,7 @@ class TaskController extends Controller
     public function store(StoreRequest $request) {
 
         $valores = $request->validated();
-        $task = Task::create([
+        $tarea = Task::create([
             'name' => $valores['name'],
             'description' => $valores['description'],
             'due_date' => $valores['due_date'],
@@ -65,7 +66,7 @@ class TaskController extends Controller
         ]);
 
         if (isset($valores['categories']) && !empty($valores['categories'])) {
-            $task->categories()->attach($valores['categories']);
+            $tarea->categories()->attach($valores['categories']);
         }
 
     return redirect('/principal')->with('success','Tarea creada');
@@ -81,21 +82,45 @@ class TaskController extends Controller
         if ($filtro !== 'all') {
             $query->where('status', $filtro);
         }
-        $tasks = $query->latest()->get();
+        $tareas = $query->latest()->get();
         
-        return view('principal', compact('tasks', 'filtro'));
+        return view('principal', compact('tareas', 'filtro'));
     }
 
     public function edit($id){
-        $tarea = Task::find($id);
+
+        $tarea = Task::findOrFail($id);
         if ($tarea->user_id !== auth()->id()){
             return redirect('/principal')->with('error', 'No puedes editar una tarea que no es tuya');
         }
-        $categoria=Category::all();
-        return view('edit', compact('tarea', 'categoria'));
+        $categorias=Category::all();
+        return view('edit', compact('tarea', 'categorias'));
     }
+
+    public function update(UpdateRequest $request, $id){
+         $tarea = Task::findOrFail($id);
+         if ($tarea->user_id !== auth()->id()) {
+            return redirect('/principal')->with('error', 'No puedes editar una tarea que no es tuya');
+         }
+         $valores = $request->validated();
+         $tarea->update([
+            'name' => $valores['name'],
+            'description' => $valores['description'],
+            'due_date' => $valores['due_date'],
+            'status' => $valores['status']
+         ]);
+         if (isset($valores['categories'])) {
+            $tarea->categories()->sync($valores['categories']);
+         }else {
+            $tarea->categories()->detach();
+         }
+
+         return redirect('/principal')->with('success', 'Tarea actualizada correctamente');
+    }
+
+    
     public function destroy($id){
-        $tarea = Task::find($id);
+        $tarea = Task::findOrFail($id);
         if ($tarea->user_id !== auth()->id()){
             return redirect('/principal')->with('error', 'No puedes borrar una tarea que no es tuya');
         }

@@ -24,36 +24,34 @@
             <option value="completed"{{ $filtro =='completed' ? 'selected' : ''}}>Completadas</option>
         </select>
     </form>
-    @if($tasks->count() > 0)
-        @foreach($tasks as $task)
-            <div>
-                <h1>{{$task->name}}</h1>
-                <p>Descripción:{{ $task->description}}</p>
+    @if($tareas->count() > 0)
+        @foreach($tareas as $tarea)
+            <div style="border: 3px solid black;"">
+                <h1>{{$tarea->name}}</h1>
+                <p>Descripción:{{ $tarea->description}}</p>
                 <p>Estado:
-                    @if($task->status== 'pending')Pendiente
-                    @elseif($task->status =='in_progress')En progreso
-                    @elseif($task->status=='completed')Completada
+                    @if($tarea->status== 'pending')Pendiente
+                    @elseif($tarea->status =='in_progress')En progreso
+                    @elseif($tarea->status=='completed')Completada
                     @endif
                 </p>
-                <p>Fecha de vencimiento:{{$task->due_date}}</p>
+                <p>Fecha de vencimiento:{{$tarea->due_date}}</p>
                 <p>Categorías: 
-                    @foreach($task->categories as $category)
-                        {{$category->name}}
-                        @if($category != $task->categories->last()), 
+                    @foreach($tarea->categories as $categoria)
+                        {{$categoria->name}}
+                        @if($categoria != $tarea->categories->last()), 
                         @endif
                     @endforeach
-                
-                <form action="/edit/{{$task->id}}" method="POST">
-                    @csrf
-                    <button type="submit">Editar esta tarea</button>
-                </form>
-                <form action="/destroy/{{$task->id}}" method="POST">
+                </br>
+                </br>
+                <a href="/edit/{{$tarea->id}}" class="button">Editar esta tarea</a>
+
+                <form action="/destroy/{{$tarea->id}}" method="POST">
                     @csrf
                     <button type="submit">Borrar esta tarea</button>
                 </form>
-                </p>
-        </div>
-        <hr>
+            </div>
+        </BR>
         @endforeach
     @else
         <p>No hay tareas</p>
@@ -68,3 +66,4 @@
     <p>No estas logeado</p>
     @endauth
 </body> 
+</html>

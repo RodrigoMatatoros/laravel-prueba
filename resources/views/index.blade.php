@@ -13,13 +13,7 @@
     </form>
     
     @else
-    @if($errors->any())
-        <ul>
-            @foreach($errors->all() as $error)
-                <li style='color: red'>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+    <x-mensajes />
         <div style="border: 3px solid black;">
         <h1>Registrarse</h1>
         <form action="/registrar" method="POST">

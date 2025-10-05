@@ -5,12 +5,9 @@
     <title>Document</title>
 </head>
 <body>
-    @auth
-
-        <x-mensajes />
     
         <h1>Nueva tarea</h1>
-        <form action="/store" method="POST">
+        <form action="/update/{{$tarea->id}}" method="POST">
         @csrf
             <label for="name">Título</label>
             <input type="text" id="name" name="name" required>
@@ -30,20 +27,17 @@
             </br>
             <label for="categories">Categorías</label>
             <select id="categories" name="categories[]" multiple>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @foreach($categorias as $categoria)
+                    <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
                 @endforeach
             </select>
             </br>
-            <button type="submit">Crear tarea</button>
+            <button type="submit">Editar tarea</button>
         </form>
     
-    <form action="/principal" method="POST">
-        @csrf
+        <form action="/principal" method="POST">
+          @csrf
         <button>Ir a principal</button>
-    </form>
-    @else
-    <p>No estas logeado</p>
-    @endauth
+        </form>
 </body>
 </html>

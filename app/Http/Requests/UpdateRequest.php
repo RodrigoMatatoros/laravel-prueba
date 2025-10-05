@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return True;
     }
 
     /**
@@ -28,6 +28,7 @@ class StoreRequest extends FormRequest
             'status' => 'required|in:pending,in_progress,completed',
             'categories' => 'sometimes|array',
             'categories.*' => 'exists:categories,id'
+        
         ];
     }
 }
