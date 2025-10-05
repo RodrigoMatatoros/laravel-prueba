@@ -55,11 +55,6 @@ class TaskController extends Controller
 
     public function store(StoreRequest $request) {
 
-        \Log::info('=== STORE METHOD CALLED ===');
-    \Log::info('URL: ' . $request->url());
-    \Log::info('Method: ' . $request->method());
-    \Log::info('All data: ', $request->all());
-    
         $valores = $request->validated();
         $task = Task::create([
             'name' => $valores['name'],

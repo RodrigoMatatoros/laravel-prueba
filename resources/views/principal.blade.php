@@ -5,12 +5,7 @@
     <title>Document</title>
 </head>
 <body>
-    @if(session('success'))
-        <p style="color: green">{{session('success')}}</p>
-    @endif
-    @if(session('error'))
-        <p style="color: red">{{ session('error') }}</p>
-    @endif
+    <x-mensajes />
     @auth
     <p>Esta loggeado en este momento</p>
     <form action="/create" method="POST">
