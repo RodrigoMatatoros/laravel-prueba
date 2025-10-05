@@ -90,6 +90,15 @@ class TaskController extends Controller
         
         return view('principal', compact('tasks', 'filtro'));
     }
+
+    public function edit($id){
+        $tarea = Task::find($id);
+        if ($tarea->user_id !== auth()->id()){
+            return redirect('/principal')->with('error', 'No puedes editar una tarea que no es tuya');
+        }
+        $categoria=Category::all();
+        return view('edit', compact('tarea', 'categoria'));
+    }
     public function destroy($id){
         $tarea = Task::find($id);
         if ($tarea->user_id !== auth()->id()){

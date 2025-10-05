@@ -21,6 +21,8 @@ Route::get('/principal', [TaskController::class, 'index'])->middleware('auth');
 
 Route::post('/destroy/{id}', [TaskController::class, 'destroy']);
 
+Route::post('/edit/{id}', [TaskController::class, 'destroy']);
+
 Route::post('/registrar', [TaskController::class,'registrar']);
 
 

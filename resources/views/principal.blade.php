@@ -47,7 +47,11 @@
                         @if($category != $task->categories->last()), 
                         @endif
                     @endforeach
-
+                
+                <form action="/edit/{{$task->id}}" method="POST">
+                    @csrf
+                    <button type="submit">Editar esta tarea</button>
+                </form>
                 <form action="/destroy/{{$task->id}}" method="POST">
                     @csrf
                     <button type="submit">Borrar esta tarea</button>
