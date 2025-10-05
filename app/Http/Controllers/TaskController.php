@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
+    /**
+     * 
+     * Maneja el Login para los usuarios
+     * Validacion de creedenciales con error por pantalla
+     */
     public function login(LoginRequest $request){
         $valores = $request->validated();
 
@@ -27,6 +32,11 @@ class TaskController extends Controller
             'loginname' => 'El usuario o la contraseña no es la correcta'
         ]);
     }
+    /**
+     * 
+     * Registra el usuario en la base de datos
+     * Crea el usuario e inicia sesion instataneamente
+     */
     public function registrar(RegisterRequest $request){
         $valores = $request->validated();
 
@@ -39,7 +49,11 @@ class TaskController extends Controller
 
         return redirect('/principal');
     }
-
+    /** 
+     * 
+     * Muestra la página principal después del login
+     * 
+    */
     public function principal(){
         if (!auth()->check()) {
         return redirect('/'); 
@@ -47,13 +61,23 @@ class TaskController extends Controller
         return view('principal');
     }
 
-    
+    /**
+     * 
+     * Saca el formulario por pantalla para crear una nueva tarea
+     * Coge todas la categorias de la tabla categories
+     */
     public function create(){
 
         $categories = Category::all();
         return view('create', compact('categories'));
     }
 
+    /**
+     * 
+     * Guarda la tarea que es creada en el formulario sacado por create()
+     * Validado con StoreRequest
+     * Nos redirige a principal
+     */
     public function store(StoreRequest $request) {
 
         $valores = $request->validated();
@@ -72,6 +96,11 @@ class TaskController extends Controller
     return redirect('/principal')->with('success','Tarea creada');
     }
 
+    /**
+     * 
+     * Muestra la lista de tareas hechas por el usuario que esta loggeado
+     * Se puede flitrar por su estatus
+     */
     public function index(Request $request)
     {
         if (!auth()->check()) {
@@ -87,6 +116,10 @@ class TaskController extends Controller
         return view('principal', compact('tareas', 'filtro'));
     }
 
+    /**
+     * Nos busca la tarea que le pasamos por parametro y nos lleva al formulario para que la editemos
+     * No deja que otros usuarios que no sea su creador la edite
+     */
     public function edit($id){
 
         $tarea = Task::findOrFail($id);
@@ -96,7 +129,13 @@ class TaskController extends Controller
         $categorias=Category::all();
         return view('edit', compact('tarea', 'categorias'));
     }
-
+    /**
+     * 
+     * Coger los valores que le pasamos con el formulario de edit($id) y le hacce update
+     * tambien modifica la tabla pivot para que no se sobreescreiba y queden mal
+     * Validacion con UpdateRequest
+     * Redirige a principal
+     */
     public function update(UpdateRequest $request, $id){
          $tarea = Task::findOrFail($id);
          if ($tarea->user_id !== auth()->id()) {
@@ -118,7 +157,11 @@ class TaskController extends Controller
          return redirect('/principal')->with('success', 'Tarea actualizada correctamente');
     }
 
-    
+    /**
+     * 
+     * Destruye la tarea en la que se clicka($id) y borra todo en la tabla tipo
+     * Redirige a principal
+     */
     public function destroy($id){
         $tarea = Task::findOrFail($id);
         if ($tarea->user_id !== auth()->id()){
@@ -129,6 +172,10 @@ class TaskController extends Controller
         return redirect('/principal')->with('success', 'Tarea eliminada perfectamente');
 
     }
+    /**
+     * Logout 
+     * Redirige a registro y login de usuarios
+     */
     public function logout(){
         auth()->logout();
         return redirect('/');

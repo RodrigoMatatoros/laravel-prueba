@@ -6,7 +6,7 @@
 </head>
 <body>
     
-        <h1>Nueva tarea</h1>
+        <h1>Editar tarea</h1>
         <form action="/update/{{$tarea->id}}" method="POST">
         @csrf
             <label for="name">Título</label>
