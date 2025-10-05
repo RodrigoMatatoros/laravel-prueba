@@ -60,7 +60,7 @@ class TaskController extends Controller
     }
 
     public function store(Request $request) {
-        // Validar los datos
+
         $valores = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -69,8 +69,6 @@ class TaskController extends Controller
             'categories' => 'sometimes|array',
             'categories.*' => 'exists:categories,id'
         ]);
-
-        // Crear la tarea
         $task = Task::create([
             'name' => $valores['name'],
             'description' => $valores['description'],
@@ -84,6 +82,21 @@ class TaskController extends Controller
         }
 
     return redirect('/principal')->with('success', 'Tarea creada');
+    }
+
+    public function index(Request $request)
+    {
+        if (!auth()->check()) {
+            return redirect('/'); 
+        }
+        $filtro = $request->get('filtro', 'all');
+        $query=Task::where('user_id',auth()->id())->with('categories');
+        if ($filtro !== 'all') {
+            $query->where('status', $filtro);
+        }
+        $tasks = $query->latest()->get();
+        
+        return view('principal', compact('tasks', 'filtro'));
     }
     public function logout(){
         auth()->logout();
