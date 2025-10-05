@@ -22,7 +22,6 @@
     @endif
         <div style="border: 3px solid black;">
         <h1>Registrarse</h1>
-
         <form action="/registrar" method="POST">
             @csrf
             <input name="name" type="text" placeholder="nombre">

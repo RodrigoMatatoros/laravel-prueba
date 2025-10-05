@@ -21,8 +21,6 @@ class RegisterRequest extends FormRequest
      */
     public function rules(): array
     {
-        \Log::info('Datos del formulario:', $this->all());
-    \Log::info('Campos recibidos:', array_keys($this->all()));
         return [
             
             'name'=>['required','string','max:255', Rule::unique('users','name')],

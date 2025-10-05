@@ -21,6 +21,8 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
+         \Log::info('=== STOREREQUEST SE ESTÁ EJECUTANDO ===');
+    \Log::info('Datos recibidos:', $this->all());
         return [
             'name' => 'required|string|max:255',
             'description' => 'required|string',

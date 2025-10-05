@@ -55,6 +55,11 @@ class TaskController extends Controller
 
     public function store(StoreRequest $request) {
 
+        \Log::info('=== STORE METHOD CALLED ===');
+    \Log::info('URL: ' . $request->url());
+    \Log::info('Method: ' . $request->method());
+    \Log::info('All data: ', $request->all());
+    
         $valores = $request->validated();
         $task = Task::create([
             'name' => $valores['name'],
@@ -68,7 +73,7 @@ class TaskController extends Controller
             $task->categories()->attach($valores['categories']);
         }
 
-    return redirect('/principal')->with('success', 'Tarea creada');
+    return redirect('/principal')->with('success','Tarea creada');
     }
 
     public function index(Request $request)
@@ -84,6 +89,16 @@ class TaskController extends Controller
         $tasks = $query->latest()->get();
         
         return view('principal', compact('tasks', 'filtro'));
+    }
+    public function destroy($id){
+        $tarea = Task::find($id);
+        if ($tarea->user_id !== auth()->id()){
+            return redirect('/principal')->with('error', 'No puedes borrar una tarea que no es tuya');
+        }
+        $tarea->categories()->detach();
+        $tarea->delete();
+        return redirect('/principal')->with('success', 'Tarea eliminada perfectamente');
+
     }
     public function logout(){
         auth()->logout();

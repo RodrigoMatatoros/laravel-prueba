@@ -13,12 +13,13 @@ Route::get('/login', function () {
 
 Route::get('/create', [TaskController::class, 'create'])->middleware('auth');
 Route::post('/create', [TaskController::class, 'create'])->middleware('auth');
+Route::post('/store', [TaskController::class, 'store'])->middleware('auth');
 
 Route::get('/principal', [TaskController::class, 'principal'])->middleware('auth');
 Route::post('/principal', [TaskController::class, 'principal'])->middleware('auth');
 Route::get('/principal', [TaskController::class, 'index'])->middleware('auth');
 
-Route::post('/index', [TaskController::class, 'store'])->middleware('auth');
+Route::post('/destroy/{id}', [TaskController::class, 'destroy']);
 
 Route::post('/registrar', [TaskController::class,'registrar']);
 
