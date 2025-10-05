@@ -31,4 +31,8 @@ Route::post('/logout', [TaskController::class,'logout']);
 
 Route::post('/login', [TaskController::class,'login']);
 
+Route::fallback(function () {
+    return redirect('/principal')->with('info', 'Página no encontrada');
+});
+
 

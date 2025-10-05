@@ -163,6 +163,7 @@ class TaskController extends Controller
      * Redirige a principal
      */
     public function destroy($id){
+
         $tarea = Task::findOrFail($id);
         if ($tarea->user_id !== auth()->id()){
             return redirect('/principal')->with('error', 'No puedes borrar una tarea que no es tuya');
