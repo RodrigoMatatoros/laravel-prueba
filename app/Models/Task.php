@@ -27,4 +27,10 @@ class Task extends Model
     {
         return $this->belongsToMany(Category::class, 'taskcategories', 'task_id', 'category_id');
     }
+    public function scopeFiltrarStatus($query, $userId, $status = 'all'){
+        if($status!='all'){
+            $query->where('status',$status);
+        }
+        return $query;
+    }
 }

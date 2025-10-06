@@ -112,11 +112,8 @@ class TaskController extends Controller
             return redirect('/'); 
         }
         $filtro = $request->get('filtro', 'all');
-        $query=Task::where('user_id',auth()->id())->with('categories');
-        if ($filtro !== 'all') {
-            $query->where('status', $filtro);
-        }
-        $tareas = $query->latest()->get();
+
+        $tareas = Task::where('user_id',auth()->id())->FiltrarStatus($filtro)->with('categories')->get();
         
         return view('principal', compact('tareas', 'filtro'));
     }
