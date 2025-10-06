@@ -15,7 +15,6 @@
     </form>
 
     <form action="" method="GET">
-        @csrf
         <label for="filtro">Filtrar tareas por estado:</label>
         <select name="filtro" id="filtro" onchange="this.form.submit()">
             <option value="all"{{ $filtro=='all' ? 'selected' : ''}}>Todas las tareas</option>

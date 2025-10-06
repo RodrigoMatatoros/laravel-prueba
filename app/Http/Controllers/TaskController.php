@@ -58,7 +58,13 @@ class TaskController extends Controller
         if (!auth()->check()) {
         return redirect('/'); 
         }
-        return view('principal');
+        $tareas = Task::where('user_id', auth()->id())
+                  ->with('categories')
+                  ->latest()
+                  ->get();
+    
+        $filtro = 'all';
+        return view('principal', compact('tareas','filtro'));
     }
 
     /**
@@ -68,8 +74,7 @@ class TaskController extends Controller
      */
     public function create(){
 
-        $categories = Category::all();
-        return view('create', compact('categories'));
+        return view('create');
     }
 
     /**

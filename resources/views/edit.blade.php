@@ -9,29 +9,7 @@
         <h1>Editar tarea</h1>
         <form action="/update/{{$tarea->id}}" method="POST">
         @csrf
-            <label for="name">Título</label>
-            <input type="text" id="name" name="name" required>
-            </br>
-            <label for="description">Descripción</label>
-            <textarea id="description" name="description" required></textarea>
-            </br>
-            <label for="due_date">Fecha de vencimiento</label>
-            <input type="date" id="due_date" name="due_date" required>
-            </br>
-            <label for="status">Estado</label>
-            <select id="status" name="status" required>
-                <option value="pending">Pendiente</option>
-                <option value="in_progress">En progreso</option>
-                <option value="completed">Completada</option>
-            </select>
-            </br>
-            <label for="categories">Categorías</label>
-            <select id="categories" name="categories[]" multiple>
-                @foreach($categorias as $categoria)
-                    <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
-                @endforeach
-            </select>
-            </br>
+            <x-formulario/>
             <button type="submit">Editar tarea</button>
         </form>
     
