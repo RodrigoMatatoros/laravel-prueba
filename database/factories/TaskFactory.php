@@ -15,6 +15,7 @@ class TaskFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
     public function definition(): array
     {
         return [
@@ -24,12 +25,5 @@ class TaskFactory extends Factory
             'status' => $this->faker->randomElement(['pending', 'in_progress', 'completed']),
             'user_id' => User::factory(),
         ];
-    }
-
-    public function withExistingCategories($categories)
-    {
-        return $this->afterCreating(function (Task $task) use ($categories) {
-            $task->categories()->attach($categories);
-        });
     }
 }
